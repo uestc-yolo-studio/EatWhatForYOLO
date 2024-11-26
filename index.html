@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>YOLO 工作室吃什么</title>
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -12,18 +14,22 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            flex-direction: column;
         }
+
         .earlyMorning {
-            background: 
+            background:
                 linear-gradient(-180deg, #BCC5CE 0%, #929EAD 98%),
-                radial-gradient(at top left, rgba(255,255,255,0.30) 0%, rgba(0,0,0,0.30) 100%);
+                radial-gradient(at top left, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
             background-blend-mode: screen;
             height: 100%;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -32,16 +38,59 @@
             background-color: #4CAF50;
             color: white;
             border-radius: 5px;
+            margin-top: 10px;
         }
+
         button:hover {
             background-color: #45a049;
         }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        #foodList {
+            margin-top: 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
+
 <body class="earlyMorning">
     <script>
-        var food = ['麦当劳', '肯德基', '必胜客', '汉堡王', '炸鸡', '烤鱼', '烤肉', '火锅', '烧烤', '麻辣烫', '炒饭', '炒面', '炒菜', '炒鸡蛋', '炒土豆丝', '炒青菜', '炒豆芽', '炒豆腐', '炒茄子', '炒黄瓜'];
-    </script>  
+        var food = ['好朋友', '家常菜', '麦当劳'];
+
+        function addFood() {
+            var foodInput = document.getElementById('foodInput').value;
+            if (foodInput) {
+                food.push(foodInput);
+                document.getElementById('foodInput').value = '';
+                displayFoodList();
+            }
+        }
+
+        function displayFoodList() {
+            var foodList = document.getElementById('foodList');
+            foodList.innerHTML = '';
+            food.forEach(function (item) {
+                var li = document.createElement('li');
+                li.textContent = item;
+                foodList.appendChild(li);
+            });
+        }
+
+        window.onload = function () {
+            displayFoodList();
+        }
+    </script>
     <button onclick="alert('今天吃：' + food[Math.floor(Math.random() * food.length)])">YOLO 今天吃什么</button>
+    <input type="text" id="foodInput" placeholder="输入新的食物">
+    <button onclick="addFood()">添加食物</button>
+    <ul id="foodList"></ul>
 </body>
+
 </html>
