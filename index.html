@@ -30,6 +30,25 @@
             flex-direction: column;
         }
 
+        .northKingdom {
+            background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
+            background-blend-mode: normal, lighten, soft-light;
+        }
+
+        .ice {
+            background-color: #CDDCDC;
+            background-image:
+                radial-gradient(at 50% 100%, rgba(255, 255, 255, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 0, 0.25) 100%);
+            background-blend-mode: screen, overlay;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -56,6 +75,12 @@
         #foodList {
             margin-top: 20px;
             font-size: 16px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #foodList li {
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -83,14 +108,34 @@
             });
         }
 
+        function toggleFoodList() {
+            var foodList = document.getElementById('foodList');
+            var foodListContainer = foodList.parentElement;
+            if (foodList.style.display === 'none') {
+                foodList.style.display = 'block';
+                foodListContainer.style.display = 'block';
+                displayFoodList();
+            } else {
+                foodList.style.display = 'none';
+                foodListContainer.style.display = 'none';
+            }
+        }
+
         window.onload = function () {
             displayFoodList();
         }
     </script>
-    <button onclick="alert('今天吃：' + food[Math.floor(Math.random() * food.length)])">YOLO 今天吃什么</button>
-    <input type="text" id="foodInput" placeholder="输入新的食物">
-    <button onclick="addFood()">添加食物</button>
-    <ul id="foodList"></ul>
+    <div class="container">
+        <button onclick="alert('今天吃：' + food[Math.floor(Math.random() * food.length)])">YOLO 今天吃什么</button>
+        <input type="text" id="foodInput" placeholder="输入新的食物">
+        <button onclick="addFood()">添加食物</button>
+        <!-- foodlist 只有点击查看卡池信息的时候才有 -->
+        <button onclick="toggleFoodList()">查看卡池信息</button>
+        <div class="ice" ,
+            style=" padding: 10px; border-radius: 5px; width: 300px; margin-top: 20px; align-self: flex-end; display: none;">
+            <ul id="foodList" style="display: none; font-size: 20px;"></ul>
+        </div>
+    </div>
 </body>
 
 </html>
