@@ -82,6 +82,25 @@
         #foodList li {
             margin: 5px 0;
         }
+
+        /* 新增样式 */
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 
@@ -105,10 +124,11 @@
         function updateFoodList() {
             const foodList = document.getElementById('foodList');
             foodList.innerHTML = ''; // 清空旧内容
-            food.forEach((n((item, index) => {
+            food.forEach((item, index) => {
                 const li = document.createElement('li');
                 li.textContent = item;
                 const deleteButton = document.createElement('button');
+                deleteButton.className = "delete-button";
                 deleteButton.textContent = '删除';
                 deleteButton.onclick = function () {
                     food.splice(index, 1);
@@ -147,8 +167,10 @@
     </script>
     <div class="container">
         <button onclick="alert('今天吃：' + food[Math.floor(Math.random() * food.length)])">YOLO 今天吃什么</button>
-        <input type="text" id="foodInput" placeholder="输入新的食物">
-        <button onclick="addFood()">添加食物</button>
+        <div class="input-group">
+            <input type="text" id="foodInput" placeholder="输入新的食物">
+            <button onclick="addFood()">添加食物</button>
+        </div>
         <button onclick="toggleFoodList()">查看卡池信息</button>
         <div class="ice"
              style="padding: 10px; border-radius: 5px; width: 300px; margin-top: 20px; align-self: flex-end; display: none;">
