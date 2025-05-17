@@ -9,7 +9,7 @@
         html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: Arial, sans-serif!important;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -82,57 +82,98 @@
         #foodList li {
             margin: 5px 0;
         }
+
+        /* 新增样式 */
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 
 <body class="earlyMorning">
     <script>
-        var food = ['好朋友', '家常菜', '麦当劳'];
+        // 初始化食物列表，尝试从 localStorage 加载
+        let food = JSON.parse(localStorage.getItem('food')) || ['好朋友', '家常菜', '麦当劳'];
 
+        // 添加新食物到列表并显示
         function addFood() {
-            var foodInput = document.getElementById('foodInput').value;
+            const foodInput = document.getElementById('foodInput').value;
             if (foodInput) {
                 food.push(foodInput);
-                document.getElementById('foodInput').value = '';
-                displayFoodList();
+                document.getElementById('foodInput').value = ''; // 清空输入框
+                updateFoodList(); // 更新食物列表
+                saveToLocalStorage(); // 保存到本地存储
             }
         }
 
-        function displayFoodList() {
-            var foodList = document.getElementById('foodList');
-            foodList.innerHTML = '';
-            food.forEach(function (item) {
-                var li = document.createElement('li');
+        // 显示食物列表
+        function updateFoodList() {
+            const foodList = document.getElementById('foodList');
+            foodList.innerHTML = ''; // 清空旧内容
+            food.forEach((item, index) => {
+                const li = document.createElement('li');
                 li.textContent = item;
-                foodList.appendChild(li);
+                const deleteButton = document.createElement('button');
+                deleteButton.className = "delete-button";
+                deleteButton.textContent = '删除';
+                deleteButton.onclick = function () {
+                    food.splice(index, 1);
+                    updateFoodList();
+                    saveToLocalStorage();
+                };
+                li.appendChild(deleteButton);
+                foodList.appendChild(li); // 添加新项
             });
         }
 
+        // 切换食物列表的显示状态
         function toggleFoodList() {
-            var foodList = document.getElementById('foodList');
-            var foodListContainer = foodList.parentElement;
+            const foodList = document.getElementById('foodList');
+            const foodListContainer = foodList.parentElement;
+
             if (foodList.style.display === 'none') {
-                foodList.style.display = 'block';
-                foodListContainer.style.display = 'block';
-                displayFoodList();
+                foodList.style.display = 'block'; // 显示食物列表
+                foodListContainer.style.display = 'block'; // 显示容器
+                updateFoodList(); // 更新食物列表
             } else {
-                foodList.style.display = 'none';
-                foodListContainer.style.display = 'none';
+                foodList.style.display = 'none'; // 隐藏食物列表
+                foodListContainer.style.display = 'none'; // 隐藏容器
             }
         }
 
-        window.onload = function () {
-            displayFoodList();
+        // 保存食物列表到本地存储
+        function saveToLocalStorage() {
+            localStorage.setItem('food', JSON.stringify(food));
         }
+
+        // 页面加载时初始化食物列表
+        window.onload = function () {
+            updateFoodList();
+        };
     </script>
     <div class="container">
         <button onclick="alert('今天吃：' + food[Math.floor(Math.random() * food.length)])">YOLO 今天吃什么</button>
-        <input type="text" id="foodInput" placeholder="输入新的食物">
-        <button onclick="addFood()">添加食物</button>
-        <!-- foodlist 只有点击查看卡池信息的时候才有 -->
+        <div class="input-group">
+            <input type="text" id="foodInput" placeholder="输入新的食物">
+            <button onclick="addFood()">添加食物</button>
+        </div>
         <button onclick="toggleFoodList()">查看卡池信息</button>
-        <div class="ice" ,
-            style=" padding: 10px; border-radius: 5px; width: 300px; margin-top: 20px; align-self: flex-end; display: none;">
+        <div class="ice"
+             style="padding: 10px; border-radius: 5px; width: 300px; margin-top: 20px; align-self: flex-end; display: none;">
             <ul id="foodList" style="display: none; font-size: 20px;"></ul>
         </div>
     </div>
