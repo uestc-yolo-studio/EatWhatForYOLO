@@ -4,167 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>YOLO 工作室吃什么</title>
-    <style>
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif!important;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            flex-direction: column;
-        }
-
-        .earlyMorning {
-            background:
-                linear-gradient(-180deg, #BCC5CE 0%, #929EAD 98%),
-                radial-gradient(at top left, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
-            background-blend-mode: screen;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .northKingdom {
-            background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
-            background-blend-mode: normal, lighten, soft-light;
-        }
-
-        .ice {
-            background-color: #CDDCDC;
-            background-image:
-                radial-gradient(at 50% 100%, rgba(255, 255, 255, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(0, 0, 0, 0.25) 100%);
-            background-blend-mode: screen, overlay;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        input {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        #foodList {
-            margin-top: 20px;
-            font-size: 16px;
-            list-style-type: none;
-            padding: 0;
-        }
-
-        #foodList li {
-            margin: 5px 0;
-        }
-
-        /* 新增样式 */
-        .input-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .delete-button {
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        .delete-button:hover {
-            background-color: darkred;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body class="earlyMorning">
-    <script>
-        // 初始化食物列表，尝试从 localStorage 加载
-        let food = JSON.parse(localStorage.getItem('food')) || ['好朋友', '家常菜', '麦当劳'];
-
-        // 添加新食物到列表并显示
-        function addFood() {
-            const foodInput = document.getElementById('foodInput').value;
-            if (foodInput) {
-                food.push(foodInput);
-                document.getElementById('foodInput').value = ''; // 清空输入框
-                updateFoodList(); // 更新食物列表
-                saveToLocalStorage(); // 保存到本地存储
-            }
-        }
-
-        // 显示食物列表
-        function updateFoodList() {
-            const foodList = document.getElementById('foodList');
-            foodList.innerHTML = ''; // 清空旧内容
-            food.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                const deleteButton = document.createElement('button');
-                deleteButton.className = "delete-button";
-                deleteButton.textContent = '删除';
-                deleteButton.onclick = function () {
-                    food.splice(index, 1);
-                    updateFoodList();
-                    saveToLocalStorage();
-                };
-                li.appendChild(deleteButton);
-                foodList.appendChild(li); // 添加新项
-            });
-        }
-
-        // 切换食物列表的显示状态
-        function toggleFoodList() {
-            const foodList = document.getElementById('foodList');
-            const foodListContainer = foodList.parentElement;
-
-            if (foodList.style.display === 'none') {
-                foodList.style.display = 'block'; // 显示食物列表
-                foodListContainer.style.display = 'block'; // 显示容器
-                updateFoodList(); // 更新食物列表
-            } else {
-                foodList.style.display = 'none'; // 隐藏食物列表
-                foodListContainer.style.display = 'none'; // 隐藏容器
-            }
-        }
-
-        // 保存食物列表到本地存储
-        function saveToLocalStorage() {
-            localStorage.setItem('food', JSON.stringify(food));
-        }
-
-        // 页面加载时初始化食物列表
-        window.onload = function () {
-            updateFoodList();
-        };
-    </script>
+    <script src="index.js"></script>
     <div class="container">
         <button onclick="alert('今天吃：' + food[Math.floor(Math.random() * food.length)])">YOLO 今天吃什么</button>
         <div class="input-group">
@@ -173,7 +17,7 @@
         </div>
         <button onclick="toggleFoodList()">查看卡池信息</button>
         <div class="ice"
-             style="padding: 10px; border-radius: 5px; width: 300px; margin-top: 20px; align-self: flex-end; display: none;">
+            style="padding: 10px; border-radius: 5px; width: 300px; margin-top: 20px; align-self: flex-end; display: none;">
             <ul id="foodList" style="display: none; font-size: 20px;"></ul>
         </div>
     </div>
